@@ -59,4 +59,16 @@ public class Gallery {
         this.lastUpdate = LocalDateTime.now();
         this.image = image;
     }
+
+    /**
+     * Updates the gallery's title, description, and last update time
+     * based on the provided request DTO.
+     *
+     * @param requestDto the DTO containing the new title and description
+     */
+    public void update(GalleryRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.description = requestDto.getDescription();
+        this.lastUpdate = LocalDateTime.now();
+    }
 }

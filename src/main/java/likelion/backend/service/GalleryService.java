@@ -59,4 +59,22 @@ public class GalleryService {
         return gallery.map(GalleryResponseDto::new).orElse(null);
     }
 
+    /**
+     * Updates an existing gallery with new title and description using the provided request DTO.
+     * If the gallery does not exist, returns null.
+     *
+     * @param id         the unique identifier of the gallery to update
+     * @param requestDto the DTO containing the updated title and description
+     * @return the updated GalleryResponseDto, or null if the gallery was not found
+     */
+    @Transactional
+    public GalleryResponseDto updateGallery(Long id, GalleryRequestDto requestDto) {
+        Optional<Gallery> gallery = galleryRepository.findById(id);
+        if (gallery.isEmpty()) {
+            return null;
+        }
+        Gallery g = gallery.get();
+        g.update(requestDto);
+        return gallery.map(GalleryResponseDto::new).orElse(null);
+    }
 }

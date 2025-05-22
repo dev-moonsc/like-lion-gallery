@@ -73,4 +73,22 @@ public class GalleryController {
         return ResponseEntity.ok(gallery);
     }
 
+    /**
+     * Handles HTTP PUT requests to update an existing gallery.
+     * Receives the gallery ID as a path variable and the updated data in the request body.
+     *
+     * @param galleryId  the unique identifier of the gallery to update (from the URL path)
+     * @param requestDto the DTO containing the updated title and description
+     * @return ResponseEntity with the updated GalleryResponseDto and HTTP 200 status if successful,
+     * or HTTP 404 status if the gallery was not found
+     */
+    @PutMapping("/{galleryId}")
+    public ResponseEntity<GalleryResponseDto> updateGallery(@PathVariable Long galleryId, @RequestBody GalleryRequestDto requestDto) {
+        GalleryResponseDto gallery = galleryService.updateGallery(galleryId, requestDto);
+        if (gallery == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(gallery);
+    }
+
 }
