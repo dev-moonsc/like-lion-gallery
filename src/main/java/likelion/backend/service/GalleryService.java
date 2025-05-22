@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class for handling business logic related to galleries.
@@ -37,11 +38,25 @@ public class GalleryService {
      * then persists it using the gallery repository.
      *
      * @param requestDto the DTO containing gallery title and description
-     * @param image the image URL or path associated with the gallery
+     * @param image      the image URL or path associated with the gallery
      */
     @Transactional
     public void createGallery(GalleryRequestDto requestDto, String image) {
         Gallery gallery = new Gallery(requestDto, image);
         galleryRepository.save(gallery);
     }
+
+    /**
+     * Retrieves a gallery by its ID and returns it as a GalleryResponseDto.
+     * Returns null if the gallery does not exist.
+     *
+     * @param id the unique identifier of the gallery
+     * @return GalleryResponseDto if found, otherwise null
+     */
+    @Transactional
+    public GalleryResponseDto getGalleryById(Long id) {
+        Optional<Gallery> gallery = galleryRepository.findById(id);
+        return gallery.map(GalleryResponseDto::new).orElse(null);
+    }
+
 }

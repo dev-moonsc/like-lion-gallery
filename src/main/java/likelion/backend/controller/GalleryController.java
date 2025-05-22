@@ -58,4 +58,19 @@ public class GalleryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Handles HTTP GET requests for retrieving a gallery by its ID.
+     *
+     * @param galleryId the unique identifier of the gallery (from the URL path)
+     * @return HTTP 200 with the gallery data if found, or HTTP 404 if not found
+     */
+    @GetMapping("/{galleryId}")
+    public ResponseEntity<GalleryResponseDto> getGalleryById(@PathVariable Long galleryId) {
+        GalleryResponseDto gallery = galleryService.getGalleryById(galleryId);
+        if (gallery == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(gallery);
+    }
+
 }
