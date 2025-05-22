@@ -1,6 +1,7 @@
 package likelion.backend.service;
 
 import likelion.backend.domain.Gallery;
+import likelion.backend.dto.GalleryRequestDto;
 import likelion.backend.dto.GalleryResponseDto;
 import likelion.backend.repository.GalleryRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,19 @@ public class GalleryService {
     public List<GalleryResponseDto> getAllGalleries() {
         List<Gallery> galleries = galleryRepository.findAll();
         return galleries.stream().map(GalleryResponseDto::new).toList();
+    }
+
+    /**
+     * Creates and saves a new gallery entity to the database.
+     * Constructs a Gallery object from the provided request data and image path,
+     * then persists it using the gallery repository.
+     *
+     * @param requestDto the DTO containing gallery title and description
+     * @param image the image URL or path associated with the gallery
+     */
+    @Transactional
+    public void createGallery(GalleryRequestDto requestDto, String image) {
+        Gallery gallery = new Gallery(requestDto, image);
+        galleryRepository.save(gallery);
     }
 }

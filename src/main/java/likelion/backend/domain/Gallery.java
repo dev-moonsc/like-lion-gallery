@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import likelion.backend.dto.GalleryRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,4 +46,17 @@ public class Gallery {
      * The date and time when the gallery was last updated.
      */
     private LocalDateTime lastUpdate;
+
+    /**
+     * Constructs a Gallery entity from the given GalleryRequestDto and image path.
+     *
+     * @param requestDto the DTO containing title and description information
+     * @param image      the image URL or path associated with the gallery
+     */
+    public Gallery(GalleryRequestDto requestDto, String image) {
+        this.title = requestDto.getTitle();
+        this.description = requestDto.getDescription();
+        this.lastUpdate = LocalDateTime.now();
+        this.image = image;
+    }
 }
