@@ -77,4 +77,19 @@ public class GalleryService {
         g.update(requestDto);
         return gallery.map(GalleryResponseDto::new).orElse(null);
     }
+
+    /**
+     * Deletes a gallery with the specified ID from the database.
+     * Throws a RuntimeException if the gallery does not exist.
+     *
+     * @param id the unique identifier of the gallery to delete
+     * @throws RuntimeException if no gallery with the given ID exists
+     */
+    @Transactional
+    public void deleteGallery(Long id) {
+        if (!galleryRepository.existsById(id)) {
+            throw new RuntimeException("Gallery with id " + id + " does not exist");
+        }
+        galleryRepository.deleteById(id);
+    }
 }

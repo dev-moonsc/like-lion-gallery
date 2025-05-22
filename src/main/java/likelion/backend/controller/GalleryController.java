@@ -91,4 +91,16 @@ public class GalleryController {
         return ResponseEntity.ok(gallery);
     }
 
+    /**
+     * Handles HTTP DELETE requests to remove a gallery by its ID.
+     *
+     * @param galleryId the unique identifier of the gallery to delete (from the URL path)
+     * @return ResponseEntity with HTTP 204 (No Content) status if deletion is successful
+     * @throws RuntimeException if the gallery does not exist
+     */
+    @DeleteMapping("/{galleryId}")
+    public ResponseEntity<Void> deleteGallery(@PathVariable Long galleryId) {
+        galleryService.deleteGallery(galleryId);
+        return ResponseEntity.noContent().build();
+    }
 }
