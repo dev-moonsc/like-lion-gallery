@@ -2,6 +2,7 @@ package likelion.backend.service;
 
 import likelion.backend.domain.Gallery;
 import likelion.backend.dto.GalleryRequestDto;
+import likelion.backend.dto.GalleryListResponseDto;
 import likelion.backend.dto.GalleryResponseDto;
 import likelion.backend.repository.GalleryRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +22,15 @@ public class GalleryService {
     private final GalleryRepository galleryRepository;
 
     /**
-     * Retrieves all galleries from the database and converts them to GalleryResponseDto objects.
+     * Retrieves all galleries from the database and converts them to GalleryListResponseDto objects.
      * This method runs in a read-only transaction.
      *
-     * @return a list of GalleryResponseDto representing all galleries
+     * @return a list of GalleryListResponseDto representing all galleries
      */
     @Transactional(readOnly = true)
-    public List<GalleryResponseDto> getAllGalleries() {
+    public List<GalleryListResponseDto> getGalleryList() {
         List<Gallery> galleries = galleryRepository.findAll();
-        return galleries.stream().map(GalleryResponseDto::new).toList();
+        return galleries.stream().map(GalleryListResponseDto::new).toList();
     }
 
     /**
@@ -49,11 +50,12 @@ public class GalleryService {
     /**
      * Retrieves a gallery by its ID and returns it as a GalleryResponseDto.
      * Returns null if the gallery does not exist.
+     * This method runs in a read-only transaction.
      *
      * @param id the unique identifier of the gallery
      * @return GalleryResponseDto if found, otherwise null
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public GalleryResponseDto getGalleryById(Long id) {
         Optional<Gallery> gallery = galleryRepository.findById(id);
         return gallery.map(GalleryResponseDto::new).orElse(null);

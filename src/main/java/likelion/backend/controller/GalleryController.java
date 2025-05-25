@@ -1,6 +1,7 @@
 package likelion.backend.controller;
 
 import likelion.backend.dto.GalleryRequestDto;
+import likelion.backend.dto.GalleryListResponseDto;
 import likelion.backend.dto.GalleryResponseDto;
 import likelion.backend.service.GalleryService;
 import likelion.backend.service.ImageService;
@@ -27,11 +28,11 @@ public class GalleryController {
     /**
      * Retrieves a list of all galleries.
      *
-     * @return ResponseEntity containing a list of GalleryResponseDto objects and HTTP 200 status
+     * @return ResponseEntity containing a list of GalleryListResponseDto objects and HTTP 200 status
      */
     @GetMapping
-    public ResponseEntity<List<GalleryResponseDto>> getAllGalleries() {
-        return ResponseEntity.ok(galleryService.getAllGalleries());
+    public ResponseEntity<List<GalleryListResponseDto>> getGalleryList() {
+        return ResponseEntity.ok(galleryService.getGalleryList());
     }
 
     /**
